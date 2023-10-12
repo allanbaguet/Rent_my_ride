@@ -63,8 +63,10 @@
                             <?php
                             //boucle permettant d'afficher les catégories, utilisant la méthode get_all
                             //préalablement crée dans le model Type
-                            foreach ($getTypesList as $typeList) { ?>
-                                <option value="<?=$typeList->id_types?>"><?php echo $typeList->type?> </option>
+                            foreach ($getTypesList as $typeList) { 
+                                //ternaire permettant 
+                            $isSelected = ($vehicleObj->id_types == $typeList->id_types) ? 'selected' : ''; ?>
+                                <option <?= $isSelected  ?> value="<?=$typeList->id_types?>"><?php echo $typeList->type?> </option>
                             <?php }
                             ?>
                         </select>
@@ -73,7 +75,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Ajout</button>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>
             </form>
         </div>

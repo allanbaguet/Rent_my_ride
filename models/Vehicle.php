@@ -102,7 +102,7 @@ class Vehicle {
      * méthode retournant la valeur du kilométrage
      * @return string
      */
-    public function getMileage(): string
+    public function getMileage(): int
     //récupération des valeurs de l'attribut / Getter 
     {
         return $this->mileage;
@@ -113,7 +113,7 @@ class Vehicle {
      * @param string $type
      * 
      */
-    public function setMileage(string $mileage)
+    public function setMileage(int $mileage)
     {
         $this->mileage = $mileage;
     }
@@ -248,7 +248,7 @@ class Vehicle {
     {
         $pdo = connect();
         $sql = 'SELECT * FROM `vehicles`
-        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` ORDER BY `types`.`type`, `vehicles`.`brand`, `vehicles`.`model`;';
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `types`.`type`, `vehicles`.`brand`, `vehicles`.`model`;';
         //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
         //qui est id_types
         $sth = $pdo->query($sql);
@@ -264,6 +264,7 @@ class Vehicle {
     {
         $pdo = connect();
         $sql = 'SELECT * FROM `vehicles` WHERE `id_vehicles` = :id_vehicles';
+        // INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types`';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
@@ -278,7 +279,64 @@ class Vehicle {
         return $result;
     }
 
+    //Méthode permettant la mise à jour d'une fiche véhicule
+    public function update(): bool
+    {
+        $pdo = connect();
+        $sql = 'UPDATE `vehicles` SET `brand` = :brand, `model` = :model, `registration` = :registration,`mileage` = :mileage, `id_types` = :id_types WHERE `id_vehicles` = :id_vehicles';
+        $sth = $pdo->prepare($sql);
+        //prepare -> éxecute la requête et protège d'injection SQL
+        //prepare / bindValue -> méthode appartenant à un PDOStatement
+        $sth->bindValue(':brand', $this->getBrand());
+        $sth->bindValue(':model', $this->getModel());
+        $sth->bindValue(':registration', $this->getRegistration());
+        $sth->bindValue(':mileage', $this->getMileage(), PDO::PARAM_INT);
+        $sth->bindValue(':id_types', $this->getId_types(), PDO::PARAM_INT);
+        $sth->bindValue(':id_vehicles', $this->getId_vehicles(), PDO::PARAM_INT);
+        //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
+        return $sth->execute();
+        //la méthode execute retourne un booléen
+    }
 
+    
+    //public static ici car on ne manipule pas de donnée
+    public static function archive(int $id_vehicles): bool
+    {
+        $pdo = connect();
+        //SET `deleted_at` = NOW() permet de mettre à jour la colonne deleted_at à l'heure de l'envois à l'archive
+        $sql = 'UPDATE `vehicles` SET `deleted_at` = NOW() WHERE `id_vehicles` = :id_vehicles';
+        //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
+        $sth = $pdo->prepare($sql);
+        //prepare -> éxecute la requête et protège d'injection SQL
+        //prepare / bindValue -> méthode appartenant à un PDOStatement
+        $sth->bindValue(':id_vehicles', $id_vehicles, PDO::PARAM_INT);
+        //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
+        $sth->execute();
+        //la méthode execute retourne un booléen
+        $nbRows = $sth->rowCount();
+        //rowCount retourne le nombre de colonne affecté par la dernière requête SQL
+        return $nbRows > 0 ? true : false;
+    }
+
+
+    //public static ici car on ne manipule pas de donnée
+    public static function delete(int $id_vehicles): bool
+    {
+        $pdo = connect();
+        //SET `deleted_at` = NOW() permet de mettre à jour la colonne deleted_at à l'heure de l'envois à l'archive
+        $sql = 'DELETE FROM `vehicles` WHERE `id_vehicles` = :id_vehicles';
+        //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
+        $sth = $pdo->prepare($sql);
+        //prepare -> éxecute la requête et protège d'injection SQL
+        //prepare / bindValue -> méthode appartenant à un PDOStatement
+        $sth->bindValue(':id_vehicles', $id_vehicles, PDO::PARAM_INT);
+        //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
+        $sth->execute();
+        //la méthode execute retourne un booléen
+        $nbRows = $sth->rowCount();
+        //rowCount retourne le nombre de colonne affecté par la dernière requête SQL
+        return $nbRows > 0 ? true : false;
+    }
 
 
 

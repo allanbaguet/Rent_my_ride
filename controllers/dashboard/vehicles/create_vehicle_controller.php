@@ -43,7 +43,8 @@ try {
             }          
         }
         //récupération et validation du kilométrage
-        $mileage = filter_input(INPUT_POST, 'mileage', FILTER_SANITIZE_NUMBER_INT);
+        //intval vaut 0 au mini ou un chiffre positif
+        $mileage = intval(filter_input(INPUT_POST, 'mileage', FILTER_SANITIZE_NUMBER_INT));
         if (empty($mileage)) {
             $errors['mileage'] = 'Veuillez obligatoirement entrer le kilométrage';
         } else {
@@ -63,15 +64,20 @@ try {
         //     }          
         // }
         //récupération et validation de la catégorie
-        $id_types = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_NUMBER_INT);
+        $id_types = intval(filter_input(INPUT_POST, 'type', FILTER_SANITIZE_NUMBER_INT));
+        if (!Type::get($id_types)) {
+            $errors['id_types'] = 'Catégorie inexistante';
+        }
 
         if (empty($errors)) {
             $newVehicle = new Vehicle();
+            //création de l'objet issu de la classe Vehicle
             $newVehicle->setBrand($brand);
             $newVehicle->setModel($model);
             $newVehicle->setRegistration($registration);
             $newVehicle->setMileage($mileage);
-            $newVehicle->setId_types(intval($id_types));
+            $newVehicle->setId_types($id_types);
+            //on hydrate l'objet de toute les propriété
             // $newVehicle->setPicture($picture);
             $saved = $newVehicle->insert();
         }

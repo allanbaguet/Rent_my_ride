@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../../config/regex.php';
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../models/Vehicle.php';
+require_once __DIR__ . '/../../../models/Type.php';
 
 $errors = [];
 
@@ -10,6 +11,7 @@ try {
     $id_vehicles = intval(filter_input(INPUT_GET, 'id_vehicles', FILTER_SANITIZE_NUMBER_INT));
     //pour appelé la méthode static -> appel de la classe avec :: nom de la fonction
     $vehicleObj = Vehicle::get($id_vehicles);
+    $getTypesList = Type::get_all();
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         //récupération et validation de la marque du véhicule
         $brand = filter_input(INPUT_POST, 'brand', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -66,16 +68,24 @@ try {
 
         if (empty($errors)) {
             $newVehicle = new Vehicle();
+            $newVehicle->setId_vehicles($id_vehicles);
             $newVehicle->setBrand($brand);
             $newVehicle->setModel($model);
             $newVehicle->setRegistration($registration);
             $newVehicle->setMileage($mileage);
             $newVehicle->setId_types($id_types);
             // $newVehicle->setPicture($picture);
-            // $saved = $newVehicle->update();
+            $saved = $newVehicle->update();
+        } //renvoi la réponse de la méthode issu de l'objet $newType, appartenant à la classe Type
+        if ($saved == true) {
+            //permet la redirection à la liste des catégories à la modification
+            header('location: /controllers/dashboard/vehicles/list_vehicle_controller.php');
+            die;
         }
     }
 } catch (\Throwable $th) {
+    var_dump($th);
+    die;
 }
 
 include __DIR__ . '/../../../views/dashboard/templates/header.php';

@@ -33,34 +33,43 @@
                 </thead>
                 <tbody class="table-group-divider">
                     <?php
-                        foreach ($getVehicleList as $vehicleList) { ?>
-                            <tr class="text-center">
-                                <th scope="row"><?php echo $vehicleList->type ?></th>
-                                <td><?php echo $vehicleList->brand ?></td>
-                                <th scope="row"><?php echo $vehicleList->model ?></th>
-                                <td class="d-flex justify-content-evenly">
-                                    <a href="/controllers/dashboard/vehicles/modif_vehicle_controller.php?id_vehicles=<?=$vehicleList->id_vehicles?>">
-                                        <button class="btn btn-transparent">
-                                            <i class="bi bi-pencil">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                </svg>
-                                            </i>
-                                        </button>
-                                    </a>
-                                    <a href="/controllers/dashboard/vehicles/delete_vehicle_controller.php?id_vehicles=<?=$vehicleList->id_vehicles?>">
-                                        <button class="btn btn-transparent">
-                                            <i class="bi bi-x-circle">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                </svg>
-                                            </i>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php } ?>
+                    foreach ($getVehicleList as $vehicleList) { ?>
+                        <tr class="text-center">
+                            <th scope="row"><?php echo $vehicleList->type ?></th>
+                            <td><?php echo $vehicleList->brand ?></td>
+                            <th scope="row"><?php echo $vehicleList->model ?></th>
+                            <td class="d-flex justify-content-evenly">
+                                <a href="/controllers/dashboard/vehicles/modif_vehicle_controller.php?id_vehicles=<?= $vehicleList->id_vehicles ?>">
+                                    <button class="btn btn-transparent">
+                                        <i class="bi bi-pencil">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                            </svg>
+                                        </i>
+                                    </button>
+                                </a>
+                                <a href="/controllers/dashboard/vehicles/delete_vehicle_controller.php?action=archive&id_vehicles=<?= $vehicleList->id_vehicles ?>">
+                                    <button class="btn btn-transparent" aria-labelledby="archive">
+                                        <i class="bi bi-pencil">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                                                <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z" />
+                                            </svg>
+                                        </i>
+                                    </button>
+                                </a>
+                                <a href="/controllers/dashboard/vehicles/delete_vehicle_controller.php?action=delete&id_vehicles=<?= $vehicleList->id_vehicles ?>">
+                                    <button class="btn btn-transparent">
+                                        <i class="bi bi-x-circle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                            </svg>
+                                        </i>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
