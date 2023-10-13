@@ -15,6 +15,9 @@ if ($action === 'archive') {
     $deleted = (int)Vehicle::delete($id_vehicles);
     //(int) -> redirection de l'url en true ou false / 0 ou 1 donc entier
     header('location: /controllers/dashboard/vehicles/list_vehicle_controller.php?delete=' . $deleted);
+} elseif ($action === 'unarchive') {
+    $unarchived = (int)Vehicle::unarchive($id_vehicles);
+    header('location: /controllers/dashboard/vehicles/list_vehicle_controller.php?unarchive=' . $unarchived);
 }
 die;
 

@@ -244,20 +244,35 @@ class Vehicle {
     }
 
     //méthode static est accessible sans la création d'un objet
-    public static function get_all(): array
+    // public static function get_all(): array
+    // {
+    //     $pdo = connect();
+    //     $sql = 'SELECT * FROM `vehicles`
+    //     INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `types`.`type`, `vehicles`.`brand`, `vehicles`.`model`;';
+    //     //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
+    //     //qui est id_types
+    //     $sth = $pdo->query($sql);
+    //     $vehicleList = $sth->fetchAll();
+    //     //fetchAll récupére tout les enregistrements
+    //     //sth -> statements handle
+    //     return $vehicleList;
+    // }
+
+    public static function get_all(string $order): array
     {
         $pdo = connect();
-        $sql = 'SELECT * FROM `vehicles`
-        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `types`.`type`, `vehicles`.`brand`, `vehicles`.`model`;';
+        $sql = "SELECT * FROM `vehicles`
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `vehicles`.`brand` $order;";
         //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
         //qui est id_types
         $sth = $pdo->query($sql);
-        $vehicleList = $sth->fetchAll();
+        // $sth->bindValue(':order', $order);
+        // $sth->execute();
+        $vehicleList = $sth->fetchAll(PDO::FETCH_OBJ);
         //fetchAll récupére tout les enregistrements
         //sth -> statements handle
         return $vehicleList;
     }
-
 
     //méthode permettant de récuperer les infos du formulaire pour les modifiés ensuite
     public static function get(int $id_vehicles): object
@@ -318,14 +333,47 @@ class Vehicle {
         return $nbRows > 0 ? true : false;
     }
 
+    public static function get_archive(string $order): array
+    {
+        $pdo = connect();
+        $sql = "SELECT * FROM `vehicles`
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NOT NULL ORDER BY `vehicles`.`brand` $order;";
+        //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
+        //qui est id_types
+        $sth = $pdo->query($sql);
+        // $sth->bindValue(':order', $order);
+        // $sth->execute();
+        $vehicleArchived = $sth->fetchAll(PDO::FETCH_OBJ);
+        //fetchAll récupére tout les enregistrements
+        //sth -> statements handle
+        return $vehicleArchived;
+    }
+
+    public static function unarchive(int $id_vehicles): bool
+    {
+        $pdo = connect();
+        //SET `deleted_at` = NULL permet de mettre à jour la colonne deleted_at, et la mettre en NULL
+        $sql = 'UPDATE `vehicles` SET `deleted_at` = NULL WHERE `id_vehicles` = :id_vehicles';
+        //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
+        $sth = $pdo->prepare($sql);
+        //prepare -> éxecute la requête et protège d'injection SQL
+        //prepare / bindValue -> méthode appartenant à un PDOStatement
+        $sth->bindValue(':id_vehicles', $id_vehicles, PDO::PARAM_INT);
+        //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
+        $sth->execute();
+        //la méthode execute retourne un booléen
+        $nbRows = $sth->rowCount();
+        //rowCount retourne le nombre de colonne affecté par la dernière requête SQL
+        return $nbRows > 0 ? true : false;
+    }
+
 
     //public static ici car on ne manipule pas de donnée
     public static function delete(int $id_vehicles): bool
     {
         $pdo = connect();
-        //SET `deleted_at` = NOW() permet de mettre à jour la colonne deleted_at à l'heure de l'envois à l'archive
         $sql = 'DELETE FROM `vehicles` WHERE `id_vehicles` = :id_vehicles';
-        //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
+        //:id_vehicles -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
         //prepare / bindValue -> méthode appartenant à un PDOStatement
