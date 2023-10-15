@@ -49,7 +49,7 @@
                     <label for="picture" class="col-sm-4 col-form-label fw-semibold fs-5">Image</label>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input class="form-control" type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg">
+                            <input class="form-control" name="picture" type="file" id="picture" name="picture" placeholder="Photo du véhicule" accept="image/png, image/jpeg, image/jpg">
                         </div>
                         <div id="pictureHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
                         <p class="error"> <?= $errors['mileage'] ?? '' ?> </p>

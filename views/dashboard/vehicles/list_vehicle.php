@@ -37,6 +37,7 @@
                                 </svg>
                             </button>
                         <th scope="col">Marque
+                            <!-- paramètre d'URL / Si $order est égal à 'ASC', alors l'expression retourne 'DESC' et inversement -->
                             <a href="?order=<?= $order == 'ASC' ? 'DESC' : 'ASC' ?>">
                                 <button class="btn btn-transparent">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-contract" viewBox="0 0 16 16">
@@ -83,16 +84,6 @@
                                         </i>
                                     </button>
                                 </a>
-                                <a href="/controllers/dashboard/vehicles/delete_vehicle_controller.php?action=delete&id_vehicles=<?= $vehicleList->id_vehicles ?>">
-                                    <button class="btn btn-transparent" title="Supprimer l'élément">
-                                        <i class="bi bi-x-circle">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                            </svg>
-                                        </i>
-                                    </button>
-                                </a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -129,6 +120,16 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket3" viewBox="0 0 16 16">
                                             <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM3.394 15l-1.48-6h-.97l1.525 6.426a.75.75 0 0 0 .729.574h9.606a.75.75 0 0 0 .73-.574L15.056 9h-.972l-1.479 6h-9.21z" />
                                         </svg>
+                                    </button>
+                                </a>
+                                <a href="/controllers/dashboard/vehicles/delete_vehicle_controller.php?action=delete&id_vehicles=<?= $vehicleArchived->id_vehicles ?>">
+                                    <button class="btn btn-transparent" title="Supprimer l'élément">
+                                        <i class="bi bi-x-circle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                            </svg>
+                                        </i>
                                     </button>
                                 </a>
                             </td>

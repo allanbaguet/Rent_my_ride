@@ -6,5 +6,8 @@ define('REGEX_MODEL', '^[A-Za-z0-9\s-]{1,50}$');
 define('REGEX_REGISTRATION', '^[A-Z]{2}-\d{3}-[A-Z]{2}$');
 define('REGEX_MILEAGE', '^[0-9]*$');
 
+define('AUTHORIZED_IMAGE_FORMAT', ['image/jpeg', 'image/png']);
+define('FILE_SIZE', [3*1000*1000]);
+
 
 ?>
