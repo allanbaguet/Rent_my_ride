@@ -298,7 +298,7 @@ class Vehicle {
     public function update(): bool
     {
         $pdo = connect();
-        $sql = 'UPDATE `vehicles` SET `brand` = :brand, `model` = :model, `registration` = :registration, `mileage` = :mileage, `picture`, :picture, `id_types` = :id_types WHERE `id_vehicles` = :id_vehicles';
+        $sql = 'UPDATE `vehicles` SET `brand` = :brand, `model` = :model, `registration` = :registration, `mileage` = :mileage, `picture` = :picture, `id_types` = :id_types WHERE `id_vehicles` = :id_vehicles';
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
         //prepare / bindValue -> méthode appartenant à un PDOStatement
