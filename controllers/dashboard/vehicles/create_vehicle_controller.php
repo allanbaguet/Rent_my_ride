@@ -53,45 +53,43 @@ try {
                 $errors['mileage'] = 'Ce champs n\'est pas valide';
             }
         }
-        // //récupération et validation de l'image de la voiture
-            //$picture contient un tableau de 6 valeurs
-            try {
-                $vehiclePicture = $_FILES['picture'];
-                if (empty($vehiclePicture['name'])) {
-                    throw new Exception("Veuillez renseigner un fichier", 1);
-                }
-                if ($vehiclePicture['error'] != 0) {
-                    throw new Exception("Fichier non envoyé", 2);
-                }
-                if (!in_array($vehiclePicture['type'], AUTHORIZED_IMAGE_FORMAT)) {
-                    throw new Exception("Mauvaise extension de fichier", 3);
-                }
-                if ($vehiclePicture['size'] >= FILE_SIZE) {
-                    throw new Exception("Taille du fichier dépassé", 4);
-                }
-                    //permet de recup l'extension -> $extension contient png
-                    $extension = pathinfo($vehiclePicture['name'], PATHINFO_EXTENSION);
-                    //$from contient le nom temporaire du fichier
-                    $from = $vehiclePicture['tmp_name'];
-                    //$fileName -> renomme le fichier, uniqid se base sur le timestamp donc id unique
-                    //et permet de récupérer le nom du fichier
-                    $fileName = uniqid('img_') . '.' . $extension;
-                    $to = __DIR__ . '/../../../public/uploads/vehicles/' . $fileName;
-                    //déplace un fichier d'un endroit à un autre
-                    move_uploaded_file($from, $to);
-            } catch (\Throwable $th) {
-                $errors['picture'] = $th->getMessage();
-            }
-
-        //récupération et validation de la catégorie
+        //récupération et validation de la catégorie par son ID
         $id_types = intval(filter_input(INPUT_POST, 'type', FILTER_SANITIZE_NUMBER_INT));
         if (!Type::get($id_types)) {
             $errors['id_types'] = 'Catégorie inexistante';
         }
-
+        // //récupération et validation de l'image de la voiture
+        //$picture contient un tableau de 6 valeurs
+        try {
+            $vehiclePicture = $_FILES['picture'];
+            if (empty($vehiclePicture)) {
+                throw new Exception("Veuillez renseigner un fichier", 1);
+            }
+            if ($vehiclePicture['error'] != 0) {
+                throw new Exception("Fichier non envoyé", 2);
+            }
+            if (!in_array($vehiclePicture['type'], AUTHORIZED_IMAGE_FORMAT)) {
+                throw new Exception("Mauvaise extension de fichier", 3);
+            }
+            if ($vehiclePicture['size'] > FILE_SIZE) {
+                throw new Exception("Taille du fichier dépassé", 4);
+            }
+            //permet de recup l'extension -> $extension contient png
+            $extension = pathinfo($vehiclePicture['name'], PATHINFO_EXTENSION);
+            //$fileName -> renomme le fichier, uniqid se base sur le timestamp donc id unique
+            //et permet de récupérer le nom du fichier
+            $fileName = uniqid('img_') . '.' . $extension;
+            //$from contient le nom temporaire du fichier
+            $from = $vehiclePicture['tmp_name'];
+            $to = __DIR__ . '/../../../public/uploads/vehicles/' . $fileName;
+            //déplace un fichier d'un endroit à un autre
+            move_uploaded_file($from, $to);
+        } catch (\Throwable $th) {
+            $errors['picture'] = $th->getMessage();
+        }
         if (empty($errors)) {
             $newVehicle = new Vehicle();
-            //nouvel instance de la classe Vehicle
+            //nouvel instance de l'objet issu de la classe Vehicle
             //on hydrate l'objet de toute les propriété
             $newVehicle->setBrand($brand);
             $newVehicle->setModel($model);
@@ -102,9 +100,11 @@ try {
             $newVehicle->setPicture($fileName);
             //ici on hydrate avec fileName -> car c'est le fichier généré
             $saved = $newVehicle->insert();
+            //$saved -> réponse de la méthode en question -> ici retourne un booléen
         }
     }
 } catch (\Throwable $th) {
+    
 }
 
 

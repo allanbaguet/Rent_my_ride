@@ -4,13 +4,14 @@ require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../models/Vehicle.php';
 require_once __DIR__ . '/../../../models/Type.php';
 
-$errors = [];
 
 try {
+    $errors = [];
     //intval -> permet de nettoyer un entier
     $id_vehicles = intval(filter_input(INPUT_GET, 'id_vehicles', FILTER_SANITIZE_NUMBER_INT));
     //pour appelé la méthode static -> appel de la classe avec :: nom de la fonction
     $vehicleObj = Vehicle::get($id_vehicles);
+    //variable qui appel la classe et sa méthode -> récupére l'id du véhicule
     $getTypesList = Type::get_all();
     // $saved = false;
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
@@ -54,37 +55,41 @@ try {
                 $errors['mileage'] = 'Ce champs n\'est pas valide';
             }
         }
+        //récupération et validation de la catégorie
+        $id_types = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
         // //récupération et validation de l'image de la voiture
-        //$picture contient un tableau de 6 valeurs
-        // if (isset($_FILES['picture']) && !empty($_FILES['picture']['name'])) {
-            try {
-                $picture = $_FILES['picture'];
-                if (!in_array($picture['type'], AUTHORIZED_IMAGE_FORMAT)) {
-                    throw new Exception("Mauvaise extension de fichier", 1);
+        //redéclarer la variable $vehiclObj afin de récupérer l'ancienne image
+        $fileName = $vehicleObj->picture;
+        try {
+            //condition si une image est déjà enregistrée à un véhicule et le modifié ensuite
+            $vehiclePicture = $_FILES['picture'];
+            //$vehiclePicture contient un tableau de 6 valeurs
+            if (!empty($vehiclePicture['name'])) {
+                if ($vehiclePicture['error'] != 0) {
+                    throw new Exception("Fichier non envoyé", 1);
                 }
-                if ($picture['size'] >= FILE_SIZE) {
-                    throw new Exception("Taille du fichier dépassé", 2);
+                if (!in_array($vehiclePicture['type'], AUTHORIZED_IMAGE_FORMAT)) {
+                    throw new Exception("Mauvaise extension de fichier", 2);
+                }
+                if ($vehiclePicture['size'] >= FILE_SIZE) {
+                    throw new Exception("Taille du fichier dépassé", 3);
                 }
                 //permet de recup l'extension -> $extension contient png
-                $extension = pathinfo($picture['name'], PATHINFO_EXTENSION);
-                //$from contient le nom temporaire du fichier
-                $from = $picture['tmp_name'];
+                $extension = pathinfo($vehiclePicture['name'], PATHINFO_EXTENSION);
                 //$fileName -> renomme le fichier, uniqid se base sur le timestamp donc id unique
                 //et permet de récupérer le nom du fichier
                 $fileName = uniqid('img_') . '.' . $extension;
+                //$from contient le nom temporaire du fichier
+                $from = $vehiclePicture['tmp_name'];
                 $to = __DIR__ . '/../../../public/uploads/vehicles/' . $fileName;
                 //déplace un fichier d'un endroit à un autre
                 move_uploaded_file($from, $to);
-            } catch (\Throwable $th) {
-                $errors['picture'] = $th->getMessage();
+                //@ permet de passer outre si il y a une erreur
+                @unlink(__DIR__ . '/../../../public/uploads/vehicles/' . $vehicleObj->picture);
             }
-        } else {
-            // Gérer le cas où aucun fichier n'a été téléchargé
-            $errors['picture'] = "Aucun fichier n'a été téléchargé.";
+        } catch (\Throwable $th) {
+            $errors['picture'] = $th->getMessage();
         }
-        //récupération et validation de la catégorie
-        $id_types = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
-
         if (empty($errors)) {
             $newVehicle = new Vehicle();
             $newVehicle->setId_vehicles($id_vehicles);
@@ -93,6 +98,7 @@ try {
             $newVehicle->setRegistration($registration);
             $newVehicle->setMileage($mileage);
             $newVehicle->setPicture($fileName);
+            //picture -> dans le cas ou l'utilisateur n'a pas modifié l'image -> donc reprendre l'ancienne
             $newVehicle->setId_types($id_types);
             $saved = $newVehicle->update();
         } //renvoi la réponse de la méthode issu de l'objet $newType, appartenant à la classe Type
@@ -101,7 +107,7 @@ try {
             header('location: /controllers/dashboard/vehicles/list_vehicle_controller.php');
             die;
         }
-    
+    }
 } catch (\Throwable $th) {
     var_dump($th);
     die;

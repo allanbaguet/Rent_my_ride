@@ -13,8 +13,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     <strong>Catégorie enregistrée avec succés !</strong> 
                 </div> -->
+                <p class="fw-semibold title-input">* Champs obligatoire</p>
                 <div class="mb-3 row my-5">
-                    <label for="brand" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Marque</label>
+                    <label for="brand" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Marque*</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control brand" id="brand" name="brand" value="" pattern="<?= REGEX_BRAND ?>" required>
                         <div id="brandHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
@@ -22,7 +23,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row my-5">
-                    <label for="model" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Modèle</label>
+                    <label for="model" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Modèle*</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control model" id="model" name="model" value="" pattern="<?= REGEX_MODEL ?>" required>
                         <div id="modelHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
@@ -30,15 +31,15 @@
                     </div>
                 </div>
                 <div class="mb-3 row my-5">
-                    <label for="registration" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Immatriculation</label>
+                    <label for="registration" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Immatriculation*</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control registration" id="registration" name="registration" value="" placeholder="XX-000-XX" pattern="<?= REGEX_REGISTRATION ?>" required>
+                        <input type="text" class="form-control registration" id="registration" name="registration" value="" placeholder="XX-111-XX" pattern="<?= REGEX_REGISTRATION ?>" required>
                         <div id="registrationHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
                         <p class="error"> <?= $errors['registration'] ?? '' ?> </p>
                     </div>
                 </div>
                 <div class="mb-3 row my-5">
-                    <label for="mileage" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Kilométrage</label>
+                    <label for="mileage" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Kilométrage*</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control mileage" id="mileage" name="mileage" value="" pattern="<?= REGEX_MILEAGE ?>" required>
                         <div id="mileageHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
@@ -56,7 +57,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row my-5">
-                    <label for="type" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Catégorie</label>
+                    <label for="type" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Catégorie*</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="type" id="type" required>
                             <option selected disabled>Choisissez une catégorie</option>

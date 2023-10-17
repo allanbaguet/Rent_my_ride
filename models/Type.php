@@ -68,14 +68,18 @@ class Type {
         return $result;
     }
 
+    
+    /**fonction permettant lister les catégories dans le select
+     * @return array
+     */
     //méthode static est accessible sans la création d'un objet
     public static function get_all(): array
     {
         $pdo = connect();
-        $sql = 'SELECT `id_types`, `type` FROM `types`;';
+        $sql = 'SELECT `id_types`, `type` FROM `types` ORDER BY `type`;';
         $sth = $pdo->query($sql);
         $typeList = $sth->fetchAll();
-        //fetchAll récupére tout les enregistrements
+        //fetchAll récupére tout les enregistrements -> fetchAll = tableau
         //sth -> statements handle
         return $typeList;
     }

@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <!-- <div class="alert alert-dismissible alert-success">
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     <strong>Catégorie enregistrée avec succés !</strong> 
@@ -47,6 +47,9 @@
                 </div>
                 <div class="mb-3 row my-5">
                     <label for="picture" class="col-sm-4 col-form-label title-input fw-semibold fs-5">Image</label>
+                    <div>
+                        <img class="img-fluid" src="/public/uploads/vehicles/<?= $vehicleObj->picture ?>" alt="image véhicule">
+                    </div>
                     <div class="col-sm-8">
                         <div class="form-group">
                             <input class="form-control" type="file" id="picture" name="picture" accept="image/png, image/jpeg, image/jpg">

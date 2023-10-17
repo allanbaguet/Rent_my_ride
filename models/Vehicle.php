@@ -225,7 +225,7 @@ class Vehicle {
     {
         $pdo = connect();
         $sql = 'INSERT INTO `vehicles` (`brand`, `model`, `registration`, `mileage`, `picture`, `id_types`)
-        VALUE (:brand, :model, :registration, :mileage, :picture, :id_types);';
+        VALUES (:brand, :model, :registration, :mileage, :picture, :id_types);';
         //:type -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
@@ -238,6 +238,7 @@ class Vehicle {
         $sth->bindValue(':id_types', $this->getId_types(), PDO::PARAM_INT);
         //bindValue -> affecter une valeur à un marqueur nominatif
         $result = $sth->execute();
+        //$result -> se trouve la réponse de la méthode execute
         //la méthode execute retourne un booléen
         //sth -> statements handle
         return $result;
@@ -298,7 +299,13 @@ class Vehicle {
     public function update(): bool
     {
         $pdo = connect();
-        $sql = 'UPDATE `vehicles` SET `brand` = :brand, `model` = :model, `registration` = :registration, `mileage` = :mileage, `picture` = :picture, `id_types` = :id_types WHERE `id_vehicles` = :id_vehicles';
+        $sql = 'UPDATE `vehicles` SET `brand` = :brand,
+        `model` = :model,
+        `registration` = :registration,
+        `mileage` = :mileage,
+        `picture` = :picture,
+        `id_types` = :id_types
+        WHERE `id_vehicles` = :id_vehicles';
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
         //prepare / bindValue -> méthode appartenant à un PDOStatement
@@ -310,8 +317,10 @@ class Vehicle {
         $sth->bindValue(':id_types', $this->getId_types(), PDO::PARAM_INT);
         $sth->bindValue(':id_vehicles', $this->getId_vehicles(), PDO::PARAM_INT);
         //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
-        return $sth->execute();
+        $sth->execute();
         //la méthode execute retourne un booléen
+        return (bool) $sth->rowCount();
+        //rowCount renvoi le nombre de ligne envoyé -> renvoi booléen 1, 2, 3 ...
     }
 
     
