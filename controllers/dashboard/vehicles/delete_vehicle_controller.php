@@ -15,12 +15,12 @@ if ($action === 'archive') {
     die;
 } elseif ($action === 'delete') {
     $deleted = (int)Vehicle::delete($id_vehicles);
-    if ($deleted) {
-        //condition supplémentaire pour supprimer l'image si il y en as une
-        $vehicleObj = Vehicle::get($id_vehicles);
-        //besoin du nom de photo -> picture donc l'appel à la méthode ::get ou il y est stocké
-        @unlink(__DIR__ . '/../../../public/uploads/vehicles/' . $vehicleObj->picture);
-    }
+    // if ($deleted) {
+    //     //condition supplémentaire pour supprimer l'image si il y en as une
+    //     $vehicleObj = Vehicle::get($id_vehicles);
+    //     //besoin du nom de photo -> picture donc l'appel à la méthode ::get ou il y est stocké
+    //     @unlink(__DIR__ . '/../../../public/uploads/vehicles/' . $vehicleObj->picture);
+    // }
     //si dans le param d'URL, delete est défini, donc condition passe dans la méthode delete par $deleted
     header('location: /controllers/dashboard/vehicles/list_vehicle_controller.php?delete=' . $deleted);
     die;      

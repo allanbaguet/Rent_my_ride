@@ -4,7 +4,7 @@ let typeHelp = document.querySelector('#typeHelp');
 
 
 // liste des regex
-const regexCategory = /^[A-Za-zÀ-ÿ-]+$/;
+const regexCategory = /^[\wÀ-ÿ-]{1,20}$/;
 
 
 // constante pour la catégorie 

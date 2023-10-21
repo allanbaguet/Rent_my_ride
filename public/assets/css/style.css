@@ -1,65 +1,186 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
     background-color: #fefffd;
     font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
+
 h1 {
     color: #181f7f;
 }
+
 .navbar {
     background-image: linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882);
 }
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(255, 102, 203);
+}
+
 .icon {
     height: 25px;
     width: 25px;
 }
+
 .arrow-left {
     height: 25px;
-    
+
 }
+
 .error {
     color: red;
 }
+
 .profil-image {
     height: 10vh;
     border-radius: 40px;
     margin-right: 20px;
 }
+
 .logo-image {
     height: 16vh;
-    margin-left: 20px;
 }
+
 .button-add {
     background: linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882);
     box-shadow: 4px 4px 8px 1px #000000;
 }
+
 .arrow-left {
-    color : #001d5e;
+    color: #001d5e;
     height: 5vh;
     box-shadow: 4px 4px 8px 1px #000000;
 }
+
 .table-responsive {
     box-shadow: 6px 7px 20px 1px #000000;
 }
+
 .custom-thead {
-    background: linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882)!important;
-    --bs-table-bg : linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882)!important;
+    background: linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882) !important;
+    --bs-table-bg: linear-gradient(to right, #051937, #001c4b, #001d5e, #001c71, #0d1882) !important;
     /* color: white; Pour définir la couleur du texte en blanc */
 }
+
 .custom-tbody {
     background: #ebebf3;
-    --bs-table-bg : #ebebf3;
+    --bs-table-bg: #ebebf3;
 }
+
 .custom-table-text {
-    color: #181f7f!important;
+    color: #181f7f !important;
 }
+
 .shadow-table {
     box-shadow: 2px 2px 20px 0px #000000;
 }
+
 .card:hover {
-    background-color: #F5F5F5; /* Change la couleur de fond au survol */
-    transition: background-color 0.3s; /* Ajoute une transition en douceur */
+    background-color: #F5F5F5;
+    transition: background-color 0.3s;
 }
+
 .title-input {
-    color: #181f7f!important;
+    color: #181f7f !important;
 }
+
+.img::before {
+    content: "";
+    background-image: url(/public/assets/img/arches-national-park-1846759_1920.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(2px);
+    /* Appliquer le flou à l'élément pseudo-avant */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    /* Placez-le en arrière-plan de l'élément .img */
+}
+
+.img {
+    height: 45vh;
+    border-bottom: 3px solid #051937;
+    position: relative;
+    display: flex;
+    /* Utilisez flexbox */
+    align-items: center;
+    /* Centrez le contenu verticalement */
+}
+
+.background-text {
+    width: 100%;
+    height: 75px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.75);
+    color: #000;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.subtitle-blue {
+    color: #181F7F;
+    font-size: 20px;
+}
+
+.description {
+    font-size: 17px;
+}
+
+hr {
+    opacity: 1;
+    border-width: 3px;
+    color: #051937;
+    width: 70%;
+    margin: 0px 15%;
+}
+
+.input-home {
+    display: inline-block;
+    border-radius: 20px 0px 0px 20px;
+    background: #EBEBF3;
+    width: 69vw;
+}
+
+.btn-research {
+    border-radius: 0px 20px 20px 0px;
+    margin-left: -7px;
+    background: linear-gradient(90deg, #051937 0%, rgba(0, 28, 75, 0.92) 43.65%, rgba(0, 29, 94, 0.88) 76.46%, rgba(13, 24, 130, 0.84) 100%);
+}
+.background-cards {
+    border-radius: 20px;
+    background: linear-gradient(92deg, #051937 1.25%, rgba(0, 28, 75, 0.92) 35.38%, rgba(0, 29, 94, 0.88) 69.6%, rgba(13, 24, 130, 0.84) 97.89%);
+}
+.check-info-vehicle{
+    background: linear-gradient(90deg, #051937 0%, rgba(0, 28, 75, 0.92) 43.65%, rgba(0, 29, 94, 0.88) 76.46%, rgba(13, 24, 130, 0.84) 100%);
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1 { grid-area: 1 / 1 / 6 / 7; }
+    .logo-footer { grid-area: 2 / 1 / 5 / 3; }
+    .CGU { grid-area: 3 / 3 / 3 / 5; }
+    .Mentions { grid-area: 4 / 3 / 5 / 5; }
+    .social { grid-area: 2 / 5 / 5 / 7; }
+
+    .social {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }

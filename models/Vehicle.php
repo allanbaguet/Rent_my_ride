@@ -396,6 +396,31 @@ class Vehicle {
         return $nbRows > 0 ? true : false;
     }
 
+    public static function get_all_vehicle(): array
+    {
+        $page = $_GET['page'] ?? 0; 
+        if(isset($page) && $page > 1) {
+            $offset = (intval($page) - 1) * 10; 
+            $sql = "SELECT * FROM `vehicles`
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL LIMIT 10 OFFSET ".$offset;
+        } else {
+            $sql = "SELECT * FROM `vehicles`
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL LIMIT 10";
+        }
+        $pdo = connect();
+//        $sql = "SELECT * FROM `vehicles`
+//        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL";
+        //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
+        //qui est id_types
+        $sth = $pdo->query($sql);
+        // $sth->bindValue(':order', $order);
+        // $sth->execute();
+        $vehicleList = $sth->fetchAll(PDO::FETCH_OBJ);
+        //fetchAll récupére tout les enregistrements
+        //sth -> statements handle
+        return $vehicleList;
+    }
+
 
 
 
