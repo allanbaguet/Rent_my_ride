@@ -9,6 +9,7 @@ define('REGEX_MILEAGE', '^[0-9]*$');
 
 define('AUTHORIZED_IMAGE_FORMAT', ['image/jpeg', 'image/png']);
 define('FILE_SIZE', [3*1000*1000]);
+define('NB_PER_PAGE', 10);
 
 
 ?>

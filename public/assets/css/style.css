@@ -132,6 +132,10 @@ h1 {
     color: #181F7F;
     font-size: 20px;
 }
+.title-blue{
+    color: #181F7F;
+    font-size: 26px;
+}
 
 .description {
     font-size: 17px;
@@ -164,6 +168,14 @@ hr {
 .check-info-vehicle{
     background: linear-gradient(90deg, #051937 0%, rgba(0, 28, 75, 0.92) 43.65%, rgba(0, 29, 94, 0.88) 76.46%, rgba(13, 24, 130, 0.84) 100%);
 }
+card {
+    height: 90vh;
+}
+.card-img-top {
+    height: 40vh;
+}
+
+
 
 .parent {
     display: grid;

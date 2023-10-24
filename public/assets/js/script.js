@@ -14,10 +14,10 @@ const checkCategory = () => {
     typeHelp.classList.add('d-none');
     // ajout de la classe d-none pour enlevé le message 
 
-    if (typeElement.value== '') {
+    if (typeElement.value == '') {
         return
     }
-// permet de réinitialisé le champ si il est vide, return sert à stoppé la boucle si rien n'est écrit
+    // permet de réinitialisé le champ si il est vide, return sert à stoppé la boucle si rien n'est écrit
 
     // refait une nouvelle instance à chaque input (évite le true/false/true/false ...)
     let isValid = regexCategory.test(typeElement.value)
@@ -34,3 +34,9 @@ const checkCategory = () => {
 
 // écouteur d'évènements à l'appui de la touche du clavier
 typeElement.addEventListener('keyup', checkCategory);
+
+
+//permet de faire un rafraichissement de la page dans le select de home.php
+type.addEventListener('change', () => {
+    searchForm.submit()
+})

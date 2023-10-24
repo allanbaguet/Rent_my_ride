@@ -4,7 +4,8 @@ require_once __DIR__ . '/../config/database.php';
 
 
 
-class Vehicle {
+class Vehicle
+{
     //private correspond à la portée des attributs / $----- est un attribut
     private int $id_vehicles;
     private string $brand;
@@ -17,7 +18,7 @@ class Vehicle {
     private string $updated_at;
     private ?string $deleted_at;
     private int $id_types;
-    
+
     /**
      * méthode retournant la valeur des ID des véhicules
      * @return int
@@ -199,7 +200,7 @@ class Vehicle {
         $this->deleted_at = $deleted_at;
     }
 
-    
+
     /**
      * méthode retournant la valeur des ID de la catégorie du véhicule
      * @return int
@@ -323,7 +324,7 @@ class Vehicle {
         //rowCount renvoi le nombre de ligne envoyé -> renvoi booléen 1, 2, 3 ...
     }
 
-    
+
     //public static ici car on ne manipule pas de donnée
     public static function archive(int $id_vehicles): bool
     {
@@ -396,32 +397,53 @@ class Vehicle {
         return $nbRows > 0 ? true : false;
     }
 
-    public static function get_all_vehicle(): array
+    //définit le paramètre d'url par défaut à 0 -> affichage de toute les catégories
+    public static function get_all_vehicle(int $id_types = 0, $search = '', int $page = 1, bool $countAll = false): array
     {
-        $page = $_GET['page'] ?? 0; 
-        if(isset($page) && $page > 1) {
-            $offset = (intval($page) - 1) * 10; 
-            $sql = "SELECT * FROM `vehicles`
-        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL LIMIT 10 OFFSET ".$offset;
-        } else {
-            $sql = "SELECT * FROM `vehicles`
-        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL LIMIT 10";
-        }
+        // Offset 0 = page 1 / Offset 10 = page 2 / Offset 20 = page 3 ...
+        $limit = NB_PER_PAGE;
+        $offset = ($page - 1) * $limit;
         $pdo = connect();
-//        $sql = "SELECT * FROM `vehicles`
-//        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL";
-        //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
-        //qui est id_types
-        $sth = $pdo->query($sql);
-        // $sth->bindValue(':order', $order);
-        // $sth->execute();
+        $sql = "SELECT * FROM `vehicles`
+        INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL";
+
+        // Condition si différent de 0 -> entre dans la condition et concatène la requête SQL et
+        // sélectionne l'id_types de la table vehicles
+        if ($id_types != 0) {
+            $sql .= " AND `vehicles`.`id_types` = :id_types";
+        }
+
+        if (!empty($search)) {
+            $sql .= " AND (`vehicles`.`brand` LIKE :search OR `vehicles`.`model` LIKE :search)";
+        }
+
+        if ($countAll == false) {
+            $sql .= " LIMIT :limit OFFSET :offset";
+        }
+
+        $sth = $pdo->prepare($sql);
+
+        // Condition comme ci-dessus, si différent de 0, bindValue de l'id_types car marqueur nominatif
+        // que si on rentre dans la condition ci-dessus
+        if ($id_types != 0) {
+            $sth->bindValue(':id_types', $id_types, PDO::PARAM_INT);
+        }
+
+        if (!empty($search)) {
+            $sth->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+        }
+
+        if ($countAll == false) {
+            $sth->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $sth->bindValue(':limit', NB_PER_PAGE, PDO::PARAM_INT);
+        }
+
+        $sth->execute();
+
+        // La méthode execute retourne un booléen
         $vehicleList = $sth->fetchAll(PDO::FETCH_OBJ);
-        //fetchAll récupére tout les enregistrements
-        //sth -> statements handle
+
+        // fetchAll récupère tous les enregistrements
         return $vehicleList;
     }
-
-
-
-
 }
