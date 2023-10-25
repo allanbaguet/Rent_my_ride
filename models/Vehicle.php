@@ -50,7 +50,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID des marques de voiture
+     * méthode affectant la valeur des marques de voiture
      * @param string $type
      * 
      */
@@ -70,7 +70,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID des modèle de voiture
+     * méthode affectant la valeur des modèle de voiture
      * @param string $type
      * 
      */
@@ -90,7 +90,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID de l'immatriculation
+     * méthode affectant la valeur de l'immatriculation
      * @param string $type
      * 
      */
@@ -110,7 +110,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID du kilométrage
+     * méthode affectant la valeur du kilométrage
      * @param string $type
      * 
      */
@@ -130,7 +130,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID de l'image
+     * méthode affectant la valeur de l'image
      * @param string $type
      * 
      */
@@ -140,7 +140,7 @@ class Vehicle
     }
 
     /**
-     * méthode retournant la valeur des ID de la création du véhicule
+     * méthode retournant la valeur de la création du véhicule
      * DateTime est un objet
      * @return int
      */
@@ -151,7 +151,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID de la création du véhicule
+     * méthode affectant la valeur de la création du véhicule
      * @param int $id_types
      * 
      */
@@ -161,7 +161,7 @@ class Vehicle
     }
 
     /**
-     * méthode retournant la valeur des ID de la modification du véhicule
+     * méthode retournant la valeur de la modification du véhicule
      * @return int
      */
     public function getUpdated_At(): int
@@ -171,7 +171,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID de la modification du véhicule
+     * méthode affectant la valeur de la modification du véhicule
      * @param int $id_types
      * 
      */
@@ -181,7 +181,7 @@ class Vehicle
     }
 
     /**
-     * méthode retournant la valeur des ID de la suppression du véhicule
+     * méthode retournant la valeur de la suppression du véhicule
      * @return int
      */
     public function getDeleted_At(): ?string
@@ -191,7 +191,7 @@ class Vehicle
     }
 
     /**
-     * méthode affectant la valeur des ID de la suppression du véhicule
+     * méthode affectant la valeur de la suppression du véhicule
      * @param int $id_types
      * 
      */
