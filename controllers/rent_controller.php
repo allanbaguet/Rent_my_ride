@@ -1,11 +1,12 @@
 <?php
 require_once __DIR__ . '/../config/regex.php';
-require_once __DIR__ . '/../models/Type.php';
-require_once __DIR__ . '/../models/Vehicle.php';
 require_once __DIR__ . '/../models/Client.php';
+require_once __DIR__ . '/../models/Rent.php';
+require_once __DIR__ . '/../models/Vehicle.php';
 
 try {
     $errors = [];
+    $id_vehicles = intval(filter_input(INPUT_GET, 'id_vehicles', FILTER_SANITIZE_NUMBER_INT));
     $currentDate = date('Y-m-d'); // Format de date YYYY-MM-DD
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         //récupération et validation du nom du client
@@ -40,13 +41,14 @@ try {
         }
         //récupération et validation de la date de naissance
         $birthday = filter_input(INPUT_POST, 'birthday', FILTER_SANITIZE_NUMBER_INT);
-        $birthday = $_POST["birthday"];
+        // $birthday = $_POST["birthday"];
         if (empty($birthday)) {
             $errors['birthday'] = 'Veuillez obligatoirement entrer une date de naissance.';
-        } elseif ($birthday >= $currentDate) {
-            $errors['birthday'] = 'Veuillez entrer une date de naissance valide.';
         } else {
-        }
+            if ($birthday >= $currentDate) {
+                $errors['birthday'] = 'Veuillez entrer une date de naissance valide.';
+            }
+        } 
         //récupération et validation du numéro de téléphone
         $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_SPECIAL_CHARS);
         if (empty($phone)) {
@@ -58,18 +60,18 @@ try {
             }
         }
         //récupération et validation du code postal
-        $zipCode = filter_input(INPUT_POST, 'zipCode', FILTER_SANITIZE_NUMBER_INT);
-        if (empty($zipCode)) {
-            $errors['zipCode'] = 'Veuillez entrer un code postal';
+        $zipcode = filter_input(INPUT_POST, 'zipcode', FILTER_SANITIZE_NUMBER_INT);
+        if (empty($zipcode)) {
+            $errors['zipcode'] = 'Veuillez entrer un code postal';
         } else {
-            $isOk = filter_var($zipCode, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . REGEX_ZIPCODE . '/')));
+            $isOk = filter_var($zipcode, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . REGEX_ZIPCODE . '/')));
             if ($isOk == false) {
-                $errors['zipCode'] = 'Le code postal n\'est pas valide';
+                $errors['zipcode'] = 'Le code postal n\'est pas valide';
             }
         }
         //récupération et validation de la date du début de réservation
         $startdate = filter_input(INPUT_POST, 'startdate', FILTER_SANITIZE_NUMBER_INT);
-        $startdate = $_POST["startdate"];
+        // $startdate = $_POST["startdate"];
         if (empty($startdate)) {
             $errors['startdate'] = 'Veuillez obligatoirement entrer une date de réservation.';
         } elseif ($startdate <= $currentDate) {
@@ -78,37 +80,56 @@ try {
         }
         //récupération et validation de la date de fin de réservation
         $enddate = filter_input(INPUT_POST, 'enddate', FILTER_SANITIZE_NUMBER_INT);
-        $enddate = $_POST["enddate"];
+        // $enddate = $_POST["enddate"];
         if (empty($enddate)) {
             $errors['enddate'] = 'Veuillez obligatoirement entrer une date de fin de réservation.';
         } elseif ($enddate <= $currentDate) {
             $errors['enddate'] = 'Veuillez entrer une date valide.';
         } else {
         }
-        //récupération et validation du pays de naissance
-        // $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
-        // if (empty($city)) {
-        //     $errors['city'] = 'Veuillez obligatoirement entrer un pays de naissance';
-        // } else {
-        //     if ((in_array($city, COUNTRIES)) == false) {
-        //         $errors['city'] = 'Veuillez selectionner votre pays de naissance';
-        //     }
-        // }
-
-        
+        //récupération et validation de la ville du client
+        $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
+        if (empty($city)) {
+            $errors['city'] = 'Veuillez obligatoirement entrer une ville';
+        } 
         if (empty($errors)) {
-            $newClient = new Client();
-            //nouvel instance de l'objet issu de la classe Vehicle
-            //on hydrate l'objet de toute les propriété
-            $newClient->setLastname($lastname);
-            $newClient->setFirstname($firstname);
-            $newClient->setEmail($email);
-            $newClient->setBirthday($birthday);
-            $newClient->setPhone($phone);
-            $newClient->setZipcode($zipCode);
-            //on hydrate l'objet de toute les propriété
-            $saved = $newClient->insert();
-            //$saved -> réponse de la méthode en question -> ici retourne un booléen
+            try {
+                $pdo = Database::connect();
+                $pdo->beginTransaction();
+                $newClient = new Client();
+                //nouvel instance de l'objet issu de la classe Vehicle
+                //on hydrate l'objet de toute les propriété
+                $newClient->setLastname($lastname);
+                $newClient->setFirstname($firstname);
+                $newClient->setEmail($email);
+                $newClient->setBirthday($birthday);
+                $newClient->setPhone($phone);
+                $newClient->setZipcode($zipcode);
+                $newClient->setCity($city);
+                //on hydrate l'objet de toute les propriété
+                // Effectue l'insertion dans la table 'clients'
+                $clientID = $newClient->insert();
+                // $clientID contient le résultat de l'insertion dans la table 'clients'
+                
+                $newRent = new Rent();
+                $newRent->setStartdate($startdate);
+                $newRent->setEnddate($enddate);
+                $newRent->setId_vehicles($id_vehicles);
+                //utilisation de la variable $clientID défini plus haut, ainsi utilisé son ID récupérer
+                $newRent->setId_clients($clientID);
+                //$clientID -> réponse de la méthode en question 
+                // Effectue l'insertion dans la table 'rent'
+                $rentSaved = $newRent->insert();
+    
+                if($clientID && $rentSaved){
+                    $pdo->commit();
+                } else {
+                    $pdo->rollBack();
+                }
+            } catch (\Throwable $th) {
+                $pdo->rollBack();
+            }
+            // $rentSaved contient le résultat de l'insertion dans la table 'rent'
         }
     }
 } catch (\Throwable $th) {

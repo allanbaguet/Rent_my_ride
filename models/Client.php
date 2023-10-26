@@ -13,7 +13,7 @@ class Client {
     private string $phone;
     private string $city;
     private string $zipcode;
-    private string $created_at;
+    private DateTime $created_at;
     private string $updated_at;
 
     public function getId_clients(): int
@@ -96,14 +96,14 @@ class Client {
         $this->zipcode = $zipcode;
     }
 
-    public function getCreated_at(): string
+    public function getCreated_at(): DateTime
     {
         return $this->created_at;
     }
 
     public function setCreated_at(string $created_at)
     {
-        $this->created_at = $created_at;
+        $this->created_at = new DateTime($created_at);
     }
 
     public function getUpdated_at(): string
@@ -116,11 +116,11 @@ class Client {
         $this->updated_at = $updated_at;
     }
 
-    public function insert(): bool
+    public function insert(): int
     {
-        $pdo = connect();
-        $sql = 'INSERT INTO `clients` (`lastname`, `firstname`, `email`, `birthday`, `phone`, `zipcode`)
-        VALUES (:lastname, :firstname, :email, :birthday, :phone, :zipcode);';
+        $pdo = Database::connect();
+        $sql = 'INSERT INTO `clients` (`lastname`, `firstname`, `email`, `birthday`, `phone`, `city`, `zipcode`)
+        VALUES (:lastname, :firstname, :email, :birthday, :phone, :city, :zipcode);';
         //:type -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
@@ -130,18 +130,20 @@ class Client {
         $sth->bindValue(':email', $this->getEmail());
         $sth->bindValue(':birthday', $this->getBirthday());
         $sth->bindValue(':phone', $this->getPhone());
+        $sth->bindValue(':city', $this->getCity());
         $sth->bindValue(':zipcode', $this->getZipcode());
         //bindValue -> affecter une valeur à un marqueur nominatif
-        $result = $sth->execute();
+        $sth->execute();
         //$result -> se trouve la réponse de la méthode execute
         //la méthode execute retourne un booléen
         //sth -> statements handle
-        return $result;
+        //récupérer et retourne le dernier ID enregistrer
+        return $pdo->lastInsertId();
     }
 
     public static function get(int $id_clients): object
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT * FROM `clients` WHERE `id_clients` = :id_clients';
         // INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types`';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -156,6 +158,17 @@ class Client {
         //fetch récupére le premier enregistrement
         //sth -> statements handle
         return $result;
+    }
+
+    public static function get_all(): array
+    {
+        $pdo = Database::connect();
+        $sql = 'SELECT * FROM `clients` ORDER BY `firstname`;';
+        $sth = $pdo->query($sql);
+        $clientList = $sth->fetchAll();
+        //fetchAll récupére tout les enregistrements -> fetchAll = tableau
+        //sth -> statements handle
+        return $clientList;
     }
 
 

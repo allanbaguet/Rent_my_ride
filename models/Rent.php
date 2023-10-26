@@ -44,7 +44,7 @@ class Rent {
      * méthode affectant la valeur de la date de début de réservation
      * @param string $stardate
      */
-    public function setStardate(string $startdate)
+    public function setStartdate(string $startdate)
     {
         $this->startdate = $startdate;
     }
@@ -141,7 +141,7 @@ class Rent {
 
     public function insert(): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'INSERT INTO `rents` (`startdate`, `enddate`, `id_vehicles`, `id_clients`)
         VALUES (:startdate, :enddate, :id_vehicles, :id_clients);';
         //:type -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -163,7 +163,7 @@ class Rent {
 
     public static function get_all(): array
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = "SELECT * FROM `rents`
         INNER JOIN `vehicles` ON `rents`.`id_vehicles` = `vehicles`.`id_vehicles`
         INNER JOIN `clients` ON `rents`.`id_clients` = `clients`.`id_clients`";
@@ -180,7 +180,7 @@ class Rent {
 
     public static function get(int $id_rents): object
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT * FROM `rents` WHERE `id_rents` = :id_rents';
         // INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types`';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)

@@ -29,6 +29,9 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link active text-white fs-4" aria-current="page" href="/controllers/dashboard/vehicles/list_vehicle_controller.php">Véhicules</a>
                     </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active text-white fs-4" aria-current="page" href="/controllers/dashboard/rents/list_rents_controller.php">Réservations</a>
+                    </li>
                     <li class="nav-item mx-3">
                         <a class="nav-link active text-white fs-4" aria-current="page" href="/controllers/home_controller.php">Retour au site</a>
                     </li>

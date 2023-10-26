@@ -224,7 +224,7 @@ class Vehicle
 
     public function insert(): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'INSERT INTO `vehicles` (`brand`, `model`, `registration`, `mileage`, `picture`, `id_types`)
         VALUES (:brand, :model, :registration, :mileage, :picture, :id_types);';
         //:type -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -248,7 +248,7 @@ class Vehicle
     //méthode static est accessible sans la création d'un objet
     // public static function get_all(): array
     // {
-    //     $pdo = connect();
+    //     $pdo = Database::connect();
     //     $sql = 'SELECT * FROM `vehicles`
     //     INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `types`.`type`, `vehicles`.`brand`, `vehicles`.`model`;';
     //     //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
@@ -262,7 +262,7 @@ class Vehicle
 
     public static function get_all(string $order): array
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = "SELECT * FROM `vehicles`
         INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL ORDER BY `vehicles`.`brand` $order;";
         //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
@@ -279,7 +279,7 @@ class Vehicle
     //méthode permettant de récuperer les infos du formulaire pour les modifiés ensuite
     public static function get(int $id_vehicles): object
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT * FROM `vehicles` WHERE `id_vehicles` = :id_vehicles';
         // INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types`';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -299,7 +299,7 @@ class Vehicle
     //Méthode permettant la mise à jour d'une fiche véhicule
     public function update(): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'UPDATE `vehicles` SET `brand` = :brand,
         `model` = :model,
         `registration` = :registration,
@@ -328,7 +328,7 @@ class Vehicle
     //public static ici car on ne manipule pas de donnée
     public static function archive(int $id_vehicles): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         //SET `deleted_at` = NOW() permet de mettre à jour la colonne deleted_at à l'heure de l'envois à l'archive
         $sql = 'UPDATE `vehicles` SET `deleted_at` = NOW() WHERE `id_vehicles` = :id_vehicles';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -346,7 +346,7 @@ class Vehicle
 
     public static function get_archive(string $order): array
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = "SELECT * FROM `vehicles`
         INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NOT NULL ORDER BY `vehicles`.`brand` $order;";
         //requête SQL permettant de joindre la table vehicles et types, et de cibler leur colonne en commun
@@ -362,7 +362,7 @@ class Vehicle
 
     public static function unarchive(int $id_vehicles): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         //SET `deleted_at` = NULL permet de mettre à jour la colonne deleted_at, et la mettre en NULL
         $sql = 'UPDATE `vehicles` SET `deleted_at` = NULL WHERE `id_vehicles` = :id_vehicles';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
@@ -382,7 +382,7 @@ class Vehicle
     //public static ici car on ne manipule pas de donnée
     public static function delete(int $id_vehicles): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'DELETE FROM `vehicles` WHERE `id_vehicles` = :id_vehicles';
         //:id_vehicles -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
@@ -403,7 +403,7 @@ class Vehicle
         // Offset 0 = page 1 / Offset 10 = page 2 / Offset 20 = page 3 ...
         $limit = NB_PER_PAGE;
         $offset = ($page - 1) * $limit;
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = "SELECT * FROM `vehicles`
         INNER JOIN `types` ON `vehicles`.`id_types` = `types`.`id_types` WHERE `deleted_at` IS NULL";
 

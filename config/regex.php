@@ -17,7 +17,7 @@ define('NB_PER_PAGE', 10);
 define('REGEX_LASTNAME', '^[A-Za-zÀ-ÿ-]+$'); 
 define('REGEX_FIRSTNAME', "^([A-Za-zÀ-ÿ\-']+ ?)+$");
 define('REGEX_EMAIL', '^[\w\.\-]+@[\w\-]+\.[a-z]{2,5}$');
-define('REGEX_BIRTHDAY', '^\d{4}-\d{2}-\d{2}$');
+// define('REGEX_BIRTHDAY', '^\d{4}-\d{2}-\d{2}$');
 define('REGEX_PHONE', '^\d{10}$');
 // define('REGEX_CITY');
 define('REGEX_ZIPCODE', '^\d{5}$');

@@ -57,7 +57,7 @@ class Type {
 
     public function insert(): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'INSERT INTO `types` (`type`) VALUE (:type);';
         //:type -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
@@ -75,7 +75,7 @@ class Type {
     //méthode static est accessible sans la création d'un objet
     public static function get_all(): array
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT `id_types`, `type` FROM `types` ORDER BY `type`;';
         $sth = $pdo->query($sql);
         $typeList = $sth->fetchAll();
@@ -87,7 +87,7 @@ class Type {
     //méthode permettant de récuperer les infos du formulaire pour les modifiés ensuite
     public static function get(int $id_types): object
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT * FROM `types` WHERE `id_types` = :id_types';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
@@ -105,7 +105,7 @@ class Type {
 
     public function update(): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'UPDATE `types` SET `type` = :type WHERE `id_types` = :id_types';
         $sth = $pdo->prepare($sql);
         //prepare -> éxecute la requête et protège d'injection SQL
@@ -120,7 +120,7 @@ class Type {
     //public static ici car on ne manipule pas de donnée
     public static function delete(int $id_types): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'DELETE FROM `types` WHERE `id_types` = :id_types';
         //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
         $sth = $pdo->prepare($sql);
@@ -137,7 +137,7 @@ class Type {
 
     public static function isExist($type): bool
     {
-        $pdo = connect();
+        $pdo = Database::connect();
         $sql = 'SELECT * FROM `types` WHERE `type` = :type;';
         // fonction COUNT permet de compter le nombre d'enregistrement dans une table
         $sth = $pdo->prepare($sql);
