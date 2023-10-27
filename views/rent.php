@@ -13,21 +13,21 @@
                 <!-- Partie nom -->
                 <div class="form-group text-white fw-bold">
                     <label for="lastname" class="form-label mt-4">Votre nom* :</label>
-                    <input type="text" class="form-control" name="lastname" id="lastname" value="Baguet" placeholder="Entrez votre nom " maxlength="50" autocomplete="family-name" pattern="<?= REGEX_LASTNAME ?>" required>
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Entrez votre nom " maxlength="50" autocomplete="family-name" pattern="<?= REGEX_LASTNAME ?>" required>
                     <div id="lastnameHelp" class="form-text error d-none text-danger">Ce champ n'est pas valide</div>
                     <p class="error"> <?= $errors['lastname'] ?? '' ?> </p>
                 </div>
                 <!-- Partie prénom -->
                 <div class="form-group text-white fw-bold">
                     <label for="firstname" class="form-label mt-4">Votre prénom* :</label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" value="Allan" placeholder="Entrez votre nom " maxlength="50" autocomplete="given-name" pattern="<?= REGEX_FIRSTNAME ?>" required>
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Entrez votre nom " maxlength="50" autocomplete="given-name" pattern="<?= REGEX_FIRSTNAME ?>" required>
                     <div id="firstnameHelp" class="form-text error d-none text-danger">Ce champ n'est pas valide</div>
                     <p class="error"> <?= $errors['firstname'] ?? '' ?> </p>
                 </div>
                 <!-- Partie adresse mail -->
                 <div class="form-group text-white fw-bold">
                     <label for="email" class="form-label mt-4">Adresse mail* :</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre mail" maxlength="120" value="allan@gmail.com" autocomplete="email" pattern="<?= REGEX_EMAIL ?>" required>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre mail" maxlength="120" autocomplete="email" pattern="<?= REGEX_EMAIL ?>" required>
                     <div id="emailHelp" class="form-text error d-none text-danger">Cet email n'est pas valide</div>
                     <p class="error"> <?= $errors['email'] ?? '' ?> </p>
                 </div>
@@ -40,14 +40,14 @@
                 <!-- Partie téléphone -->
                 <div class="form-group text-white fw-bold">
                     <label for="phone" class="form-label mt-4">Téléphone* :</label>
-                    <input type="text" class="form-control" name="phone" id="phone" value="0654872154" maxlength="10" placeholder="Ex: 0322541202" pattern="<?= REGEX_PHONE ?>" autocomplete="tel" required>
+                    <input type="text" class="form-control" name="phone" id="phone" maxlength="10" placeholder="Ex: 0322541202" pattern="<?= REGEX_PHONE ?>" autocomplete="tel" required>
                     <div id="phoneHelp" class="form-text error d-none text-danger">Ce champ n'est pas valide</div>
                     <p class="error"> <?= $errors['phone'] ?? '' ?> </p>
                 </div>
                 <!-- Partie code postal -->
                 <div class="form-group text-white fw-bold">
                     <label for="zipcode" class="form-label mt-4">Code postal* :</label>
-                    <input type="text" inputmode="numeric" class="form-control" name="zipcode" id="zipcode" value="80100" maxlength="5" placeholder="Ex: 80100" autocomplete="postal-code" pattern="<?= REGEX_ZIPCODE ?>" required>
+                    <input type="text" inputmode="numeric" class="form-control" name="zipcode" id="zipcode" maxlength="5" placeholder="Ex: 80100" autocomplete="postal-code" pattern="<?= REGEX_ZIPCODE ?>" required>
                     <p class="error"> <?= $errors['zipcode'] ?? '' ?> </p>
                 </div>
                 <!-- Partie ville -->
@@ -56,6 +56,8 @@
                     <select class="form-control" name="city" id="city" maxlength="50">
                         <option selected disabled>Choisissez votre ville</option>
                         <option>Abbeville</option>
+                        <option>Amiens</option>
+                        <option>Paris</option>
                     </select>
                     <p class="error"> <?= $errors['city'] ?? '' ?> </p>
                 </div>

@@ -160,8 +160,25 @@ class Rent {
         return $result;
     }
 
+    public static function confirm(int $id_rents): bool
+    {
+        $pdo = Database::connect();
+        //SET `deleted_at` = NOW() permet de mettre à jour la colonne deleted_at à l'heure de l'envois à l'archive
+        $sql = 'UPDATE `rents` SET `confirmed_at` = NOW() WHERE `id_rents` = :id_rents';
+        //:id_types -> marqueur nominatif (à utilisé quand une valeur vient de l'extérieur)
+        $sth = $pdo->prepare($sql);
+        //prepare -> éxecute la requête et protège d'injection SQL
+        //prepare / bindValue -> méthode appartenant à un PDOStatement
+        $sth->bindValue(':$id_rents', $id_rents, PDO::PARAM_INT);
+        //bindValue -> affecter une valeur à un marqueur nominatif, PDO::PARAM_STR par defaut
+        $sth->execute();
+        //la méthode execute retourne un booléen
+        $nbRows = $sth->rowCount();
+        //rowCount retourne le nombre de colonne affecté par la dernière requête SQL
+        return $nbRows > 0 ? true : false;
+    }
 
-    public static function get_all(): array
+    public static function get_All(): array
     {
         $pdo = Database::connect();
         $sql = "SELECT * FROM `rents`
@@ -177,6 +194,7 @@ class Rent {
         //sth -> statements handle
         return $vehicleList;
     }
+
 
     public static function get(int $id_rents): object
     {

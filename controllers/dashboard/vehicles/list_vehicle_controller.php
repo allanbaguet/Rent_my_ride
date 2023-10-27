@@ -15,6 +15,7 @@ try {
     $getVehicleArchived = Vehicle::get_archive($order);
     $archive= filter_input(INPUT_GET, 'archive', FILTER_SANITIZE_NUMBER_INT);
     $delete = filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT);
+    $unarchive = filter_input(INPUT_GET, 'unarchive', FILTER_SANITIZE_NUMBER_INT);
 } catch (\Throwable $th) {
 
 }

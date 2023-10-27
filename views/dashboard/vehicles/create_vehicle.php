@@ -17,7 +17,7 @@
                 <div class="mb-3 row my-5">
                     <label for="brand" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Marque*</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control brand" id="brand" name="brand" value="" pattern="<?= REGEX_BRAND ?>" required>
+                        <input type="text" class="form-control brand" id="brand" name="brand" value="" placeholder="Volskwagen..." pattern="<?= REGEX_BRAND ?>" required>
                         <div id="brandHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
                         <p class="error"> <?= $errors['brand'] ?? '' ?> </p>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="mb-3 row my-5">
                     <label for="model" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Modèle*</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control model" id="model" name="model" value="" pattern="<?= REGEX_MODEL ?>" required>
+                        <input type="text" class="form-control model" id="model" name="model" value="" placeholder="ID buzz..." pattern="<?= REGEX_MODEL ?>" required>
                         <div id="modelHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
                         <p class="error"> <?= $errors['model'] ?? '' ?> </p>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="mb-3 row my-5">
                     <label for="mileage" class="col-sm-4 col-form-label fw-semibold title-input fs-5">Kilométrage*</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control mileage" id="mileage" name="mileage" value="" pattern="<?= REGEX_MILEAGE ?>" required>
+                        <input type="text" class="form-control mileage" id="mileage" name="mileage" value="" placeholder="150000..." pattern="<?= REGEX_MILEAGE ?>" required>
                         <div id="mileageHelp" class="form-text error d-none text-danger">Le champ n'est pas valide</div>
                         <p class="error"> <?= $errors['mileage'] ?? '' ?> </p>
                     </div>

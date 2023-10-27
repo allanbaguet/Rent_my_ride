@@ -17,6 +17,10 @@
                 echo 'Élément archivé avec succès';
             } else if ($archive === '0') {
                 echo 'Erreur pendant l\'archivage de l\'élément';
+            } else if ($unarchive === '1') {
+                echo 'Élement désarchivé avec succès';
+            } else if ($unarchive === '0') {
+                echo 'Erreur pendant le désarchivage de l\'élément';
             }
         ?>
     <div class="d-flex justify-content-center">

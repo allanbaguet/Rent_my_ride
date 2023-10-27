@@ -13,7 +13,7 @@
     <div class="row mb-5">
         <div class="col-1"></div>
         <div class="col-10">
-            <p>Le <span class="custom-table-text fw-bold"><?= $getVehicleList->brand ?> <?= $getVehicleList->model ?></span> est une icône automobile qui incarne une époque d'innocence, de créativité et d'aventure. Son design classique, sa polyvalence et son impact culturel en font un véhicule inoubliable et chéri par de nombreuses générations.</p>
+            <p class="fs-5">Le <span class="custom-table-text fw-bold"><?= $getVehicleList->brand ?> <?= $getVehicleList->model ?></span> est une icône automobile qui incarne une époque d'innocence, de créativité et d'aventure. Son design classique, sa polyvalence et son impact culturel en font un véhicule inoubliable et chéri par de nombreuses générations.</p>
         </div>
     </div>
 </div>

@@ -45,7 +45,7 @@
                 </button>
                 <div class="form-group">
                     <label for="type" class="form-label mt-4 fst-italic input-home"></label>
-                    <select class="form-select" id="type" name="id_types">
+                    <select class="form-select catégorie-home ms-5" id="type" name="id_types">
                         <option selected disabled>Choisissez une catégorie</option>
                         <?php
                         //boucle permettant d'afficher les catégories, utilisant la méthode get_all

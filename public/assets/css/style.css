@@ -113,6 +113,10 @@ h1 {
     /* Centrez le contenu verticalement */
 }
 
+
+
+
+/* Default styles for all screen sizes */
 .background-text {
     width: 100%;
     height: 75px;
@@ -126,6 +130,23 @@ h1 {
     font-style: italic;
     font-weight: 500;
     line-height: normal;
+}
+
+/* Media query for screens with a minimum width of 992px (typical for desktops) */
+@media (min-width: 768px) {
+    .background-text {
+        font-size: 30px; /* Increase the font size for desktop screens */
+        width: 100%;
+        height: 85px;
+    }
+}
+/* Media query for screens with a minimum width of 992px (typical for desktops) */
+@media (min-width: 992px) {
+    .background-text {
+        font-size: 36px; /* Increase the font size for desktop screens */
+        width: 100%;
+        height: 85px;
+    }
 }
 
 .subtitle-blue {
@@ -161,6 +182,20 @@ hr {
     margin-left: -7px;
     background: linear-gradient(90deg, #051937 0%, rgba(0, 28, 75, 0.92) 43.65%, rgba(0, 29, 94, 0.88) 76.46%, rgba(13, 24, 130, 0.84) 100%);
 }
+#searchForm {
+    text-align: center; /* Center the form content horizontally */
+}
+/* Default styles for all screen sizes */
+#search, .catégorie-home {
+    width: 80%; /* Full width for smaller screens */
+}
+
+/* Media query for screens with a minimum width of 992px (typical for desktops) */
+@media (min-width: 992px) {
+    #search, .catégorie-home {
+        width: 90%; /* Adjust the width as needed for desktop screens */
+    }
+}
 .background-cards {
     border-radius: 20px;
     background: linear-gradient(92deg, #051937 1.25%, rgba(0, 28, 75, 0.92) 35.38%, rgba(0, 29, 94, 0.88) 69.6%, rgba(13, 24, 130, 0.84) 97.89%);
@@ -177,6 +212,7 @@ card {
 #scroll {
     scroll-behavior: smooth;
 }
+
 
 
 

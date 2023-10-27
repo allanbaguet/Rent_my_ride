@@ -121,6 +121,8 @@ try {
                 // Effectue l'insertion dans la table 'rent'
                 $rentSaved = $newRent->insert();
     
+                //condition utilisant la méthode beginTransaction plus haut
+                //permettant l'annulation du processus, si erreurs lors d'un insert
                 if($clientID && $rentSaved){
                     $pdo->commit();
                 } else {

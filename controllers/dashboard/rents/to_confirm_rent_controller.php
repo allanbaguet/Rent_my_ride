@@ -7,9 +7,8 @@ require_once __DIR__ . '/../../../models/Vehicle.php';
 
 try {
     $getClientList = Client::get_all(); 
-    $getConfirmed = Rent::get_confirm();
     $infoClient = filter_input(INPUT_GET, 'info', FILTER_SANITIZE_NUMBER_INT);
-    $confirm = filter_input(INPUT_GET, 'confirm', FILTER_SANITIZE_NUMBER_INT);
+    
 
 } catch (\Throwable $th) {
 
@@ -17,5 +16,5 @@ try {
 
 
 include __DIR__ . '/../../../views/dashboard/templates/header.php';
-include __DIR__ . '/../../../views/dashboard/rents/list_rent.php';
+include __DIR__ . '/../../../views/dashboard/rents/to_confirm_rent.php';
 include __DIR__ . '/../../../views/dashboard/templates/footer.php';

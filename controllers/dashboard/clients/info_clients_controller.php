@@ -6,8 +6,13 @@ require_once __DIR__ . '/../../../models/Type.php';
 require_once __DIR__ . '/../../../models/Vehicle.php';
 
 try {
-    $getClientList = Client::get_all(); 
+    $id_clients = intval(filter_input(INPUT_GET, 'id_clients', FILTER_SANITIZE_NUMBER_INT));
     $infoClient = filter_input(INPUT_GET, 'info', FILTER_SANITIZE_NUMBER_INT);
+    $getClientList = Client::get($id_clients);
+    $getVehicleClient = Rent::get_All();
+    
+
+
 
 } catch (\Throwable $th) {
 

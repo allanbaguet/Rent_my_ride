@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/../config/constante.php';
 
+
+//création d'une classe database, et utilisation dans chaque méthode pour la connexion
+// -> permet d'eviter plusieur objet pdo lors de la connexion -> singleton
 class Database {
 
     private static $pdo;
@@ -16,7 +19,6 @@ class Database {
                 //affiche un message d'erreur si les données ne sont pas bonnes
                 die('Erreur : ' . $error->getMessage());
             }
-            var_dump(self::$pdo);
         }
         return self::$pdo;
     }
